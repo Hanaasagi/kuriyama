@@ -41,7 +41,7 @@ class Path(inquirer.questions.List):
 def main():
     choices = map(
         lambda c: "| ".join(c),
-        zip(get_quick_marks(["j", "k"]), read_recent_dirs()),
+        zip(get_quick_marks(["j", "k"]), read_recent_dirs()[:20]),
     )
     questions = [
         Path("path", message="", choices=list(choices), carousel=True)
