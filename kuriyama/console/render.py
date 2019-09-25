@@ -8,13 +8,13 @@ class PathRender(ListRender):
 
     def process_input(self, pressed: str) -> None:
         question = self.question
-        if pressed == "k":
+        if pressed == "k" or pressed == key.UP:
             if question.carousel and self.current == 0:
                 self.current = len(question.choices) - 1
             else:
                 self.current = max(0, self.current - 1)
             return
-        if pressed == "j":
+        if pressed == "j" or pressed == key.DOWN:
             if question.carousel and self.current == len(question.choices) - 1:
                 self.current = 0
             else:
