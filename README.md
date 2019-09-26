@@ -14,6 +14,7 @@ Kuriyama is an interactive command to navigate history directories and switch be
 git clone https://github.com/Hanaasagi/kuriyama
 cd kuriyama
 poetry install
+mkdir ${XDG_CACHE_HOME:-~/.cache}/kuriyama
 ```
 
 then add following lines in your zshrc.
