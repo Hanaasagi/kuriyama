@@ -27,12 +27,17 @@ def get_cache_dir() -> str:
 
 
 def read_recent_dirs() -> List[str]:
+    res = []
     cache_dir = get_cache_dir()
     if not os.path.exists(cache_dir):
         os.makedirs(cache_dir)
     cache_file = os.path.join(cache_dir, "buffer")
     with open(cache_file, "r") as f:
-        return list(OrderedDict.fromkeys(f.read().strip().split(" ")))
+        content = f.read()
+    for path in OrderedDict.fromkeys(content.strip().split(" ")):
+        if os.path.exists(os.path.expanduser(path)):
+            res.append(path)
+    return res
 
 
 class Path(inquirer.questions.List):
