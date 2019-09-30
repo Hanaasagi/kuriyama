@@ -2,6 +2,7 @@ import os
 import random
 import inquirer
 import string
+from collections import OrderedDict
 from inquirer import themes
 from .console import CustomConsoleRender
 
@@ -31,7 +32,7 @@ def read_recent_dirs() -> List[str]:
         os.makedirs(cache_dir)
     cache_file = os.path.join(cache_dir, "buffer")
     with open(cache_file, "r") as f:
-        return f.read().strip().split(" ")
+        return list(OrderedDict.fromkeys(f.read().strip().split(" ")))
 
 
 class Path(inquirer.questions.List):
