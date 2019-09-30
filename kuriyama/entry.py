@@ -2,6 +2,7 @@ import os
 import random
 import inquirer
 import string
+import sys
 from collections import OrderedDict
 from inquirer import themes
 from .console import CustomConsoleRender
@@ -44,7 +45,7 @@ class Path(inquirer.questions.List):
     kind = "pathlist"
 
 
-def main():
+def run():
     choices = map(
         lambda c: "| ".join(c),
         zip(get_quick_marks(["j", "k"]), read_recent_dirs()[:20]),
@@ -53,7 +54,9 @@ def main():
         Path("path", message="", choices=list(choices), carousel=True)
     ]
     answers = inquirer.prompt(
-        questions, render=CustomConsoleRender(theme=themes.Default())
+        questions,
+        render=CustomConsoleRender(theme=themes.Default()),
+        raise_keyboard_interrupt=True,
     )
     if answers is None:
         return
@@ -61,3 +64,10 @@ def main():
     target_file = os.path.join(cache_dir, "target")
     with open(target_file, "w") as f:
         f.write(os.path.expanduser(answers["path"].split("| ")[-1]))
+
+
+def main():
+    try:
+        run()
+    except KeyboardInterrupt:
+        return
